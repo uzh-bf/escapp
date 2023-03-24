@@ -8,4 +8,9 @@ RUN npm install
 
 COPY . .
 
-CMD npm run migrate_local && npm run start
+ENV NODE_ENV=development
+ENV PORT=80
+ENV DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+ENV APP_NAME=localhost
+
+CMD npm run migrate_local && npm run seed_local && npm run start

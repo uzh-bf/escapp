@@ -7,9 +7,9 @@ services:
     depends_on:
       - db
     ports:
-      - ${PORT}:${PORT}
-    env_file:
-      - .env
+      - 5000:80
+    networks:
+      - default
 
   db:
     image: postgres
@@ -18,8 +18,13 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=qUr&e95Gj1Sm*0o # URL-Encoded: qUr%26e95Gj1Sm%2A0o
-      - POSTGRES_DB=escapp_prod
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    networks:
+      - default
 
 volumes:
   db_data:
+
+networks:
+  default:
