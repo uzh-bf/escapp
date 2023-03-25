@@ -7,4 +7,4 @@ data:
   PORT: '3000'
   APP_NAME: escape.bf-app.ch
   NODE_ENV: production
-  DATABASE_SSL: true
+  DATABASE_SSL: 'true'

@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
       - image: ghcr.io/uzh-bf/escapp:master
+        imagePullPolicy: Always
         name: escapp
         envFrom:
         - configMapRef:
