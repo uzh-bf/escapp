@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: escapp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: escapp
+    spec:
+      containers:
+      - image: ghcr.io/uzh-bf/escapp:master
+        name: escapp
+        envFrom:
+        - configMapRef:
+            name: escapp
+        - secretRef:
+            name: escapp
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        resources: {}
