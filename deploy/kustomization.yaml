@@ -3,7 +3,10 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cm.yaml
-  - secret.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml
+secretGenerator:
+  - name: escapp
+    namespace: escapp
+    env: .env

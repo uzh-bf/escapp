@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: escapp
+  namespace: escapp
 spec:
   ports:
   - name: http
