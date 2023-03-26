@@ -15,7 +15,7 @@ var https = require('https');
  * Get port from environment and store in Express.
  */
 
-if (httpApp.get("env") === "production" && !process.env.HEROKU && Boolean(process.env.APP_SSL)) {
+if (httpApp.get("env") === "production" && !process.env.HEROKU && process.env.APP_SSL === 'true') {
   var httpServer;
   var port = normalizePort('443');
   var fs = require('fs');
@@ -31,7 +31,7 @@ if (httpApp.get("env") === "production" && !process.env.HEROKU && Boolean(proces
   httpServer.listen(port);
   httpServer.on('error', onError);
   httpServer.on('listening', onListening);
-}  
+}
   var port = normalizePort(process.env.PORT || '3000');
   httpApp.set('port', port);
 
