@@ -62,5 +62,8 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
+  },
+  "volta": {
+    "node": "10.24.1"
   }
 }
