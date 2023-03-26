@@ -30,7 +30,7 @@ app.use(compression());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-if (app.get("env") === "production" && !process.env.HEROKU) {
+if (app.get("env") === "production" && !process.env.HEROKU && process.env.APP_SSL === "true") {
     app.use((req, res, next) => {
         if (req.secure) {
             next();
