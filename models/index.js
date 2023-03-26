@@ -3,11 +3,21 @@ const path = require("path");
 // Load ORM
 const { Sequelize } = require("sequelize");
 
-const url = process.env.DATABASE_URL;
+const dbConfig = require("./config");
 
-const sequelize = new Sequelize(url);// Import the definition of the Escape Room Table from escapeRoom.js
+let sequelize = null;
 
+if (process.env.DATABASE_URL) {
+    sequelize = new Sequelize(process.env.DATABASE_URL);
+} else if (process.env.DATABASE_HOST && process.env.DATABASE_USER && process.env.DATABASE_PASS && process.env.DATABASE_NAME) {
+    sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
+}
 
+if (!sequelize) {
+    throw new Error("Please define valid database credentials (DATABASE_URL or DATABASE_HOST/DATABASE_USER/DATABASE_PASS/DATABASE_NAME).");
+}
+
+// Import the definition of the Escape Room Table from escapeRoom.js
 require(path.join(__dirname, "escapeRoom"))(sequelize, Sequelize.DataTypes);
 
 // Session
