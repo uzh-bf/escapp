@@ -5,12 +5,7 @@ const { Sequelize } = require("sequelize");
 
 const url = process.env.DATABASE_URL;
 
-const sequelize = new Sequelize(url, {
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: Boolean(process.env.DATABASE_SSL)
-    }
-});// Import the definition of the Escape Room Table from escapeRoom.js
+const sequelize = new Sequelize(url);// Import the definition of the Escape Room Table from escapeRoom.js
 
 
 require(path.join(__dirname, "escapeRoom"))(sequelize, Sequelize.DataTypes);
