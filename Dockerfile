@@ -10,7 +10,10 @@ COPY . .
 
 ENV APP_NAME='localhost'
 ENV APP_SSL='false'
-ENV DATABASE_URL='postgres://postgres:postgres@db:5432/postgres?sslmode=disable'
+ENV DATABASE_USER='escapp'
+ENV DATABASE_PASS='escapp'
+ENV DATABASE_NAME='escapp'
+ENV DATABASE_HOST='db'
 ENV DATABASE_SSL='false'
 ENV NODE_ENV='development'
 ENV PORT='3000'
