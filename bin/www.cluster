@@ -31,7 +31,7 @@ if (cluster.isMaster) {
   /**
    * Get port from environment and store in Express.
    */
-  if (httpApp.get("env") === "production" && !process.env.HEROKU) {
+  if (httpApp.get("env") === "production" && !process.env.HEROKU && Boolean(process.env.APP_SSL)) {
     var httpServer;
     var port = normalizePort('443');
     var fs = require('fs');
