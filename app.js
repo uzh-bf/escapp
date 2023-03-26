@@ -88,7 +88,7 @@ const sessionMiddleware = session({
     "cookie": {
         "path": "/",
         "httpOnly": true,
-        "secure": app.get("env") === "production" && !process.env.HEROKU,
+        "secure": app.get("env") === "production" && !process.env.HEROKU && process.env.APP_SSL === "true",
         "maxAge": null
     },
     "saveUninitialized": false
