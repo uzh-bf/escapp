@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-slim
 
 WORKDIR /app
 
@@ -18,4 +18,4 @@ ENV DATABASE_SSL='false'
 ENV NODE_ENV='development'
 ENV PORT='3000'
 
-CMD npm run migrate_local && npm run start_production
+CMD npm run migrate_local && npm run start
