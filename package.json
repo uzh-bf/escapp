@@ -48,7 +48,7 @@
     "sass": "^1.51.0",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",
-    "socket.io": "^4.5.0",
+    "socket.io": "4.5.0",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
     "uuid-token-generator": "^1.0.0",
