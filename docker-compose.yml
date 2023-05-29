@@ -10,9 +10,11 @@ services:
       - 3000:3000
     networks:
       - default
+    profiles:
+      - full
 
   db:
-    image: postgres:15
+    image: docker.io/library/postgres:15
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -22,6 +24,8 @@ services:
       - POSTGRES_DB=escapp
     networks:
       - default
+    ports:
+      - 5432:5432
 
 volumes:
   db_data:
