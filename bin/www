@@ -40,7 +40,7 @@ if (httpApp.get("env") === "production" && !process.env.HEROKU && process.env.AP
    */
 
   var server = http.createServer(httpApp);
-  if (httpApp.get("env") !== "production" && !process.env.HEROKU) {
+  if ((httpApp.get("env") !== "production" || process.env.APP_SSL !== 'true') && !process.env.HEROKU) {
     global.io = io.createServer(server, httpApp.sessionMiddleware);
   }
   /**
