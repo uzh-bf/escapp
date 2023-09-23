@@ -9,9 +9,20 @@ spec:
   tls:
     - hosts:
         - escape.bf-app.ch
+        - escape.uzh.ch
       secretName: escapp-tls
   rules:
     - host: escape.bf-app.ch
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: escapp
+                port:
+                  name: http
+    - host: escape.uzh.ch
       http:
         paths:
           - path: /
