@@ -59,7 +59,7 @@ module.exports = function (sequelize, DataTypes) {
         "lang": {
             "type": DataTypes.STRING,
             "allowNull": true,
-            "validate": {"isIn": [["en", "es"]]}
+            "validate": {"isIn": [["en", "es", "de"]]}
         }
     });
 

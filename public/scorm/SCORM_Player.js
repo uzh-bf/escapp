@@ -496,7 +496,8 @@ function SCORM_Player (options) {
 
         return typeof language === "string" && [
             "en",
-            "es"
+            "es",
+            "de"
         ].indexOf(language) != -1;
 
     }
