@@ -54,6 +54,7 @@
         <select  class="customInput" id="lang" name="lang" required autocomplete="off">
             <option value="en" <%=(user.lang == "en" || (!user.lang && (i18n.lang === "en"))) ? "selected" :""%>><%=i18n.langs.en%></option>
             <option value="es" <%=(user.lang == "es" || (!user.lang && (i18n.lang === "es"))) ? "selected" :""%>><%=i18n.langs.es%></option>
+            <option value="de" <%=(user.lang == "de" || (!user.lang && (i18n.lang === "de"))) ? "selected" :""%>><%=i18n.langs.de%></option>
         </select>
         </label>
     </div>

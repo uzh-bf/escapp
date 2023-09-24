@@ -6,9 +6,7 @@
             <a title="<%=i18n.common.mainPage%>" href="/escapeRooms"><span class="navBarIcon material-icons">home</span></a>
             <span style="display:inline-block;width:10px;"></span>
             <% if (!session.user.isStudent) { %>
-                <a title="<%=i18n.common.guide%>" href="/inspiration"><span class="navBarIcon material-icons">help_outline</span></a>
-                <span style="display:inline-block;width:10px;"></span>
-                <a title="<%=i18n.common.ideas%>" href="/resources/"><span class="navBarIcon material-icons">widgets</span></a>
+                <a title="<%=i18n.common.guide%>" href="https://www.gbl.uzh.ch/escape" target="_blank"><span class="navBarIcon material-icons">help_outline</span>
             <% } %>
         <% } %>
     </div>

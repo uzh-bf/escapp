@@ -9,6 +9,13 @@ const {nextStep, prevStep} = require("../helpers/progress");
 const {saveInterface, getERPuzzles, paginate, validationError} = require("../helpers/utils");
 const es = require("../i18n/es");
 const en = require("../i18n/en");
+const de = require("../i18n/de");
+
+const LANGUAGE_FILES = {
+    en,
+    es,
+    de
+};
 
 // Autoload the escape room with id equals to :escapeRoomId
 exports.load = async (req, res, next, escapeRoomId) => {
@@ -19,8 +26,8 @@ exports.load = async (req, res, next, escapeRoomId) => {
             if (res.locals) {
                 if (!req.session || req.session && req.session.user && req.session.user.isStudent) {
                     if (escapeRoom.forceLang && req.cookies && req.cookies.locale !== escapeRoom.forceLang) {
-                        res.locals.i18n_texts = escapeRoom.forceLang === "es" ? es : en;
-                        res.locals.i18n_lang = escapeRoom.forceLang === "es" ? "es" : "en";
+                        res.locals.i18n_texts = LANGUAGE_FILES[escapeRoom.forceLang] || en;
+                        res.locals.i18n_lang = Object.keys(LANGUAGE_FILES).includes(escapeRoom.forceLang) ? escapeRoom.forceLang : "en";
                         res.locals.i18n = res.locals.i18n_texts;
                     }
                 }
@@ -121,7 +128,7 @@ exports.create = async (req, res) => {
     const escapeRoom = models.escapeRoom.build({title, subject, duration, "forbiddenLateSubmissions": forbiddenLateSubmissions === "on", invitation, description, supportLink, "scope": scope === "private", "teamSize": teamSize || 0, authorId, forceLang}); // Saves only the fields question and answer into the DDBB
     const {i18n} = res.locals;
 
-    escapeRoom.forceLang = forceLang === "en" || forceLang === "es" ? forceLang : null;
+    escapeRoom.forceLang = Object.keys(LANGUAGE_FILES).includes(forceLang) ? forceLang : null;
 
     try {
         const er = await escapeRoom.save({"fields": ["title", "teacher", "subject", "duration", "description", "forbiddenLateSubmissions", "scope", "teamSize", "authorId", "supportLink", "invitation", "forceLang"]});
@@ -193,7 +200,7 @@ exports.update = async (req, res) => {
     escapeRoom.invitation = body.invitation !== undefined ? body.invitation.toString() : undefined;
     escapeRoom.scope = body.scope === "private";
     escapeRoom.teamSize = body.teamSize || 0;
-    escapeRoom.forceLang = body.forceLang === "en" || body.forceLang === "es" ? body.forceLang : null;
+    escapeRoom.forceLang = Object.keys(LANGUAGE_FILES).includes(body.forceLang) ? body.forceLang : null;
     const progressBar = body.progress;
 
     try {

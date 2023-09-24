@@ -42,9 +42,9 @@ exports.checkParticipantSafe = async (req, res, next) => {
         const user = await authenticate(email, password, token);
 
         if (user) {
-            if (!req.escapeRoom.forceLang && user.lang && i18n.lang !== user.lang && (user.lang === "es" || user.lang === "en")) {
+            if (!req.escapeRoom.forceLang && user.lang && i18n.lang !== user.lang && (user.lang === "es" || user.lang === "en" || user.lang === "de")) {
                 // eslint-disable-next-line global-require
-                res.locals.i18n_lang = user.lang === "es" ? "es" : "en";
+                res.locals.i18n_lang = ["en", "es", "de"].includes(user.lang) ? user.lang : "en";
                 // eslint-disable-next-line global-require
                 res.locals.i18n_texts = require(`../i18n/${res.locals.i18n_lang}`);
                 res.locals.i18n = res.locals.i18n_texts;

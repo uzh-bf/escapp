@@ -49,8 +49,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(i18n({
     "translationsPath": path.join(__dirname, "i18n"),
-    "siteLangs": ["en", "es"],
-    "locales": ["en", "es"],
+    "siteLangs": ["en", "es", "de"],
+    "locales": ["en", "es", "de"],
     "cookieLangName": "locale",
     "defaultLang": "en",
     "textsVarName": "i18n"

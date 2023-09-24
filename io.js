@@ -19,19 +19,19 @@ exports.createServer = (server, sessionMiddleware) => {
             const {escapeRoomId, lang, waiting, "turnId": teacherTurnId} = getInfoFromSocket(socket);
             let forceLanguage = "en";
 
-            if (lang && (lang === "es" || lang === "en")) {
+            if (lang && (lang === "es" || lang === "en" || lang === "de")) {
                 forceLanguage = lang;
             }
             let i18n = require(`./i18n/${forceLanguage}`);
 
             if (user) {
-                if (user.lang && (user.lang === "es" || user.lang === "en")) {
+                if (user.lang && (user.lang === "es" || user.lang === "en" || user.lang === "de")) {
                     i18n = require(`./i18n/${user.lang}`);
                 }
                 const {token, username} = user;
                 const {"turnId": studentTurnId, teamId, participation, erState, errorMsg, language, teamInstructions} = await checkAccess(user, escapeRoomId, i18n, waiting);
 
-                if (language && (language === "es" || language === "en")) {
+                if (language && (language === "es" || language === "en" || language === "de")) {
                     i18n = require(`./i18n/${language}`);
                 }
 
