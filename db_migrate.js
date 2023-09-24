@@ -14,7 +14,7 @@ function callback (err, stdout, stderr) {
 }
 
 if (process.env.DATABASE_URL) {
-    exec(`./node_modules/.bin/sequelize db:migrate --uri ${process.env.DATABASE_URL}`, callback);
+    exec(`./node_modules/.bin/sequelize db:migrate --url ${process.env.DATABASE_URL}`, callback);
 } else if (process.env.DATABASE_HOST && process.env.DATABASE_USER && process.env.DATABASE_PASS && process.env.DATABASE_NAME) {
     exec("./node_modules/.bin/sequelize db:migrate --config models/config.js", callback);
 } else {
