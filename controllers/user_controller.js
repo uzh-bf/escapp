@@ -124,7 +124,7 @@ exports.update = (req, res, next) => {
     user.gender = body.gender;
     let scs = i18n.common.flash.successEditingUser;
 
-    if (body.lang === "es" || body.lang === "en") {
+    if (["en", "es", "de"].includes(body.lang)) {
         user.lang = body.lang;
         if (req.cookies && req.cookies.locale && (user.lang !== body.lang || req.cookies.locale !== body.lang)) {
             res.cookie("locale", body.lang);
