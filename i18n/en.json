@@ -696,7 +696,8 @@
     "langs": {
         "dontForce": "Do not force",
         "en": "English",
-        "es": "Spanish"
+        "es": "Spanish",
+        "de": "German"
     },
     "resources": {
         "title": "Resources for creating puzzles",

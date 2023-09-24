@@ -1,6 +1,6 @@
 {
-  "lang": "en",
-  "locale": "en_US",
+  "lang": "de",
+  "locale": "de_CH",
   "description": "Plattform für die Verwaltung von Escape Rooms im Bildungsbereich",
   "analytics": {
     "charts": {
@@ -689,7 +689,8 @@
   "langs": {
     "dontForce": "Nicht erzwingen",
     "en": "Englisch",
-    "es": "Spanisch"
+    "es": "Spanisch",
+    "de": "Deutsch"
   },
   "resources": {
     "title": "Ressourcen für die Erstellung von Puzzles",

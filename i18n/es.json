@@ -685,7 +685,8 @@
     "langs": {
         "dontForce": "No forzar",
         "en": "Inglés",
-        "es": "Español"
+        "es": "Español",
+        "de": "Alemán"
     },
     "resources": {
         "title": "Recursos para crear retos",
