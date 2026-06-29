@@ -103,7 +103,7 @@ exports.pistasUpdate = async (req, res) => {
             } else {
                 try {
                     await attHelper.checksCloudinaryEnv();
-                    const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options_zip);
+                    const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options_zip, req.file);
                     const old_public_id = escapeRoom.hintApp ? escapeRoom.hintApp.public_id : null; // Update the attachment into the data base.
 
                     const att = await escapeRoom.getHintApp();

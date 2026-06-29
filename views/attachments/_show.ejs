@@ -7,7 +7,7 @@
         <% } else if ( attachment.mime === 'video/mp4') { %>
             <%- cloudinary.video(locals.attachment.public_id, {controls: false, secure: true})%>
         <% } else if ( attachment.mime === 'application/pdf') { %>
-            <%- cloudinary.image(locals.attachment.public_id, {format: 'jpg', secure: true}) %>
+            <a href="<%= locals.attachment.url %>" target="_blank" rel="noopener"><%= locals.attachment.filename %></a>
         <% } else { %>
             <img  alt="None" src="/images/none.png">
         <% } %>

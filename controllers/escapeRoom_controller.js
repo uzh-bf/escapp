@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const {QueryTypes} = require("sequelize");
 const sequelize = require("../models");
 const {models} = sequelize;
-const cloudinary = require("cloudinary");
 const query = require("../queries");
 const attHelper = require("../helpers/attachments");
 const {nextStep, prevStep} = require("../helpers/progress");
@@ -88,7 +87,7 @@ exports.index = async (req, res, next) => {
         } else {
             const pageArray = paginate(page, pages, 5);
 
-            res.render("escapeRooms/index.ejs", {escapeRooms, cloudinary, user, count, page, pages, pageArray});
+            res.render("escapeRooms/index.ejs", {escapeRooms, "cloudinary": attHelper, user, count, page, pages, pageArray});
         }
     } catch (error) {
         next(error);
@@ -107,9 +106,9 @@ exports.show = async (req, res) => {
         const howManyRetos = await models.retosSuperados.count({"where": {"success": true, "teamId": team.id }});
         const finished = howManyRetos === escapeRoom.puzzles.length;
 
-        res.render("escapeRooms/showStudent", {escapeRoom, cloudinary, participant, team, finished});
+        res.render("escapeRooms/showStudent", {escapeRoom, "cloudinary": attHelper, participant, team, finished});
     } else {
-        res.render("escapeRooms/show", {escapeRoom, cloudinary, hostName, "email": req.session.user.username});
+        res.render("escapeRooms/show", {escapeRoom, "cloudinary": attHelper, hostName, "email": req.session.user.username});
     }
 };
 
@@ -142,7 +141,7 @@ exports.create = async (req, res) => {
 
         try {
             await attHelper.checksCloudinaryEnv();
-            const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options);
+            const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options, req.file);
 
             try {
                 await models.attachment.create({
@@ -219,7 +218,7 @@ exports.update = async (req, res) => {
             try {
                 // Save the new attachment into Cloudinary:
                 await attHelper.checksCloudinaryEnv();
-                const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options);
+                const uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options, req.file);
                 // Remember the public_id of the old image.
                 const old_public_id = er.attachment ? er.attachment.public_id : null;
                 let attachment = await er.getAttachment();
