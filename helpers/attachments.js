@@ -3,6 +3,14 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
+const getUploadPath = () => process.env.UPLOADS_PATH || path.join("public", "uploads");
+
+const safeExtension = (file) => {
+    const extension = path.extname(file && file.originalname || "").toLowerCase();
+
+    return extension.match(/^\.[a-z0-9]+$/) ? extension : "";
+};
+
 const uploadResourceToCloudinary = (src, options) => new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(
         src,
@@ -20,33 +28,50 @@ const uploadResourceToCloudinary = (src, options) => new Promise((resolve, rejec
     );
 });
 
-const uploadResourceToFileSystem = (src) => new Promise(function (resolve, reject) {
+const uploadResourceToFileSystem = (src, file) => new Promise(function (resolve, reject) {
     const salt = `${Math.round(new Date().valueOf() * Math.random())}`;
-    const public_id = crypto.createHmac("sha256", salt).update(src).
-        digest("hex");
+    const public_id = `${crypto.createHmac("sha256", salt).update(src).
+        digest("hex")}${safeExtension(file)}`;
 
-    const url = path.join("/uploads", public_id);
+    const url = path.posix.join("/uploads", public_id);
 
-    const destination = path.join("public", "uploads", public_id);
+    const destination = path.join(getUploadPath(), public_id);
 
-    fs.copyFile(src, destination, fs.constants.COPYFILE_EXCL, function (error) {
-        if (error) {
-            reject(error);
-        } else {
-            resolve({
-                public_id,
-                url
-            });
+    fs.mkdir(path.dirname(destination), {"recursive": true}, function (dirError) {
+        if (dirError) {
+            reject(dirError);
+            return;
         }
+        fs.copyFile(src, destination, fs.constants.COPYFILE_EXCL, function (error) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve({
+                    public_id,
+                    url
+                });
+            }
+        });
     });
 });
 
-exports.uploadResource = function (src, options) {
+const deleteResourceFromFileSystem = (public_id) => new Promise(function (resolve) {
+    const destination = path.join(getUploadPath(), public_id);
+
+    fs.unlink(destination, function (error) {
+        if (error) {
+            console.error("Failed to delete file from filesystem", error);
+        }
+        resolve();
+    });
+});
+
+exports.uploadResource = function (src, options, file) {
     return new Promise(function (resolve) {
         if (process.env.CLOUDINARY_URL) {
             resolve(uploadResourceToCloudinary(src, options));
         } else {
-            resolve(uploadResourceToFileSystem(src));
+            resolve(uploadResourceToFileSystem(src, file));
         }
     });
 };
@@ -61,11 +86,7 @@ exports.deleteResource = async function (public_id, model) {
         // Delete from Cloudinary.
         cloudinary.api.delete_resources(public_id);
     } else {
-        const destination = path.join("public", "uploads", public_id); // Delete from local file system.
-
-        fs.unlink(destination, function (error) {
-            console.error("Failed to delete file from filesystem", error);
-        });
+        await deleteResourceFromFileSystem(public_id);
     }
 };
 
@@ -110,13 +131,7 @@ exports.video = function (public_id, options) {
             "</video>";
 };
 
-exports.checksCloudinaryEnv = () => new Promise((resolve, reject) => {
-    if (process.env.CLOUDINARY_URL) {
-        resolve();
-    } else {
-        reject(new Error("The CLOUDINARY_URL env variable is not defined."));
-    }
-});
+exports.checksCloudinaryEnv = () => Promise.resolve();
 
 exports.cloudinary_upload_options = {
     "folder": "/escapeRoom/attachments",

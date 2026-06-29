@@ -41,7 +41,7 @@ exports.uploadAssets = async (req, res) => {
     try {
         await attHelper.checksCloudinaryEnv();
         // Save the new asset into Cloudinary:
-        uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options_zip);
+        uploadResult = await attHelper.uploadResource(req.file.path, attHelper.cloudinary_upload_options_zip, req.file);
     } catch (err) {
         res.status(500);
         res.send(err);
@@ -103,4 +103,3 @@ exports.browse = async (req, res, next) => {
         next(err);
     }
 };
-
